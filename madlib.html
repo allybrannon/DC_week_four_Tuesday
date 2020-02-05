@@ -7,6 +7,8 @@
     <title>Ally's Madlib Fun</title>
     <style>
         body {
+            display:flex;
+            flex-direction: column;
             font-family: Helvetica, sans-serif;
             font-size: 24px;
             background: content-box radial-gradient(yellow, pink);
@@ -20,6 +22,11 @@
         h2 {
             font-size: 24px;
         }
+        form {
+            display: flex;
+            flex-direction: column;
+            font-size: 20px;
+        }
         .image{
             display: flex;
             justify-content: center;
@@ -27,76 +34,88 @@
             margin-right: auto;
             width: 100%; 
         }
+        footer {
+            font-size: 14px;
+            text-align: center;
+        }
+        a {
+            color: rgb(31, 172, 165);
+            text-align: center;
+        }
+        .buttonID {
+            display: flex;
+            justify-content: center;
+        }
     </style>
 </head>
 <body>
     <h1>Ally's Mad Lib Fun</h1>
-    <h2>Insert words into the prompts below. I'll input your words into the story!</h2>
-    <p>Today is a <span id= "adjective1">_______</span> day. <span id="yourName">_______</span> has been working hard in class. The <span id="adjective2">_______</span> teacher has been giving us lots of stuff to do.</p> 
-    <p>After lunch, the <span id="adjective3">_______</span> teacher will have us present our work!</p>
-    <p>I hope my <span id = "adjective4">_______</span> story doesn't get presented. If it does, I'll just <span id = "verb1">_______</span> it anyway!</p>
+    <h2>Insert words into the boxes below. I'll input your words into the story below!</h2>
     <form>
         <label>
             An Adjective:
-            <input type="text" id ="adjective1Input" value=""/>
+            <input type="text" class = "userInput" value=""/>
         </label>
         <br>
         <label>
             Your Name:
-            <input type="text" id="yourNameInput" value=""/>
+            <input type="text" class = "userInput" value=""/>
         </label>
         <br>
         <label>
             A Second Adjective:
-            <input type="text" id="adjective2Input" value=""/>
+            <input type="text" class = "userInput" value=""/>
         </label>
         <br>
         <label>
             A Third Adjective:
-            <input type="text" id="adjective3Input" value =""/>
+            <input type="text" class = "userInput" value =""/>
         </label>
         <br>
         <label>
             A Fourth Adjective:
-            <input type="text" id="adjective4Input" value =""/>
+            <input type="text" class ="userInput" value =""/>
         </label>
         <br>
         <label>
             A Verb:
-            <input type="text" id="verb1Input" value =""/>
+            <input type="text" class = "userInput "value =""/>
         </label>
         <br>
-        <button type = "button" id ="runMadLib">Run Madlib!</button>
     </form>
-    <img src="computerclipart.png" alt ="Computer clip art" class="image">
-    
+
+       <p class = "buttonID"> <button id = "getInputButton" type = "button">Run Madlib!</button></p>
+        <img src="computerclipart.png" alt ="Computer clip art" class="image">
+   
+    <p>Today is a <span class = "replaceWord" >_______</span> day. <span class = "replaceWord" >_______</span> has been working hard in class. The <span class = "replaceWord">_______</span> teacher has been giving us lots of stuff to do.</p> 
+    <p>After lunch, the <span class = "replaceWord">_______</span> teacher will have us present our work!</p>
+    <p>I hope my <span class = "replaceWord">_______</span> story doesn't get presented. If it does, I'll just <span class = "replaceWord">_______</span> it anyway!</p>
+    <a href="javascript:history.go(0)">Click to refresh the page</a>
+    <footer>
+        A DigitalCrafts project by <a href=https://github.com/allybrannon>Ally B.</a>
+    </footer>
 </body>
 <script>
-    const myButton = document.getElementById("runMadLib");
-    const adjective1 = document.getElementById("adjective1");
-    const yourName = document.getElementById("yourName");
-    const adjective2 = document.getElementById("adjective2");
-    const adjective3 = document.getElementById("adjective3");
-    const adjective4 = document.getElementById("adjective4");
-    const verb1 = document.getElementById("verb1");
+    const htmlWords = document.querySelectorAll('.replaceWord');
+    const getUserInputButton = document.querySelector('#getInputButton');
+    const userInputs = document.querySelectorAll('.userInput');
     
-    const adjectiveInput = document.getElementById("adjective1Input");
-    const yourNameInput = document.getElementById("yourNameInput");
-    const adjective2Input = document.getElementById("adjective2Input");
-    const adjective3Input = document.getElementById("adjective3Input");
-    const adjective4Input = document.getElementById("adjective4Input");
-    const verb1Input = document.getElementById("verb1Input");
 
-    myButton.addEventListener('click', function(e){
-        e.preventDefault();
-        adjective1.innerHTML = adjective1Input.value;
-        yourName.innerHTML = yourNameInput.value;
-        adjective2.innerHTML = adjective2Input.value;
-        adjective3.innerHTML = adjective3Input.value;
-        adjective4.innerHTML = adjective4Input.value;
-        verb1.innerHTML = verb1Input.value;
-    });
-   
+    function parseUserInput(listOfInputs) {
+        const arrayOfValues = [];
+        listOfInputs.forEach(function(input){
+            arrayOfValues.push(input.value);
+        });
+        return arrayOfValues;
+    }
 
+    getUserInputButton.addEventListener('click', function(event){
+        event.preventDefault();
+        const userInputArray = parseUserInput(userInputs);
+
+        htmlWords.forEach(function(word, index){
+            word.innerHTML = userInputArray[index];
+        });
+     })
 </script>
 </html>
